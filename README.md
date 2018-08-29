@@ -1,6 +1,5 @@
-This is the modified implementation of Needelman-Wunsch algorithm
-[Link](http://en.wikipedia.org/wiki/Needleman-Wunsch_algorithm)
-that can be found [here](https://github.com/aebruno/nwalgo). 
+This is the modified implementation of [Needelman-Wunsch](http://en.wikipedia.org/wiki/Needleman-Wunsch_algorithm)  algorithm.
+Original you can find [here](https://github.com/aebruno/nwalgo). 
 
 ## Installation 
 ```golang
