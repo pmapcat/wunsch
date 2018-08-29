@@ -38,13 +38,21 @@ AlignManyString([]string{"Hello", "Hallo", "Hillo", "Hwello", "lloha", "habar"})
 As the library is small, all usage is obvious from the test cases, but here are 
 some code snippets that might prove useful
 
-### Item interface
+### Item struct
 
-It must implement the Id method. Item `Id()` is an equivalent of a `rune` in a `string` item. 
+The `Id` field is for comparing items between each other. 
+The Index field is for reference to the external data structure. 
+
+For example, if we wanted to use `string` as our external data structure, 
+the `Id` field would store the numeric representation of a `rune`. 
+And the index field would store the position of that `rune` in an 
+original `string`. 
+
 
 ```go
-type Item interface {
-	Id() string
+type Item struct {
+	Id    int
+	Index int
 }
 ```
 
