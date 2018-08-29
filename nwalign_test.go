@@ -37,6 +37,25 @@ func TestMultipleAlignment(t *testing.T) {
 			"hh--hh",
 			"hh--hh",
 			"hh22--"})
+	assert.Equal(t, AlignManyString([]string{"", "", "", ""}),
+		[]string{
+			"",
+			"",
+			"",
+			""})
+
+	assert.Equal(t, AlignManyString([]string{"", "", "", "aaa"}),
+		[]string{
+			"---",
+			"---",
+			"---",
+			"aaa"})
+	assert.Equal(t, AlignManyString([]string{"a", "b", "c", "d"}),
+		[]string{
+			"---a",
+			"--b-",
+			"-c--",
+			"d---"})
 
 }
 
