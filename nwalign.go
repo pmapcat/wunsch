@@ -99,7 +99,7 @@ func AlignManyString(data []string) []string {
 func CanAlignString(a, b string) bool {
 	result := make([][]Item, 0)
 	for k, _ := range a {
-		result = append(result, []Item{Gap(a[k]), Gap(b[k])})
+		result = append(result, []Item{StringItem(a[k]), StringItem(b[k])})
 	}
 	return CanAlign(result)
 }

@@ -87,10 +87,10 @@ func NeedlemanWunsch(a, b []Item, match, mismatch, gap int) ([][]Item, int) {
 			i--
 			j--
 		} else if p == UP {
-			result = join_items(result, a[i-1], Gap("-"))
+			result = join_items(result, a[i-1], StringItem("-"))
 			i--
 		} else if p == LEFT {
-			result = join_items(result, Gap("-"), b[j-1])
+			result = join_items(result, StringItem("-"), b[j-1])
 			j--
 		}
 	}

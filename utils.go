@@ -1,3 +1,10 @@
+// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+// @ Copyright (c) Michael Leachim                                                      @
+// @ You can find additional information regarding licensing of this work in LICENSE.md @
+// @ You must not remove this notice, or any other, from this software.                 @
+// @ All rights reserved.                                                               @
+// @@@@@@ At 2018-29-08 18:56<mklimoff222@gmail.com> @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
 package wunsch
 
 import (
@@ -8,9 +15,9 @@ type Item interface {
 	Id() string
 }
 
-type Gap string
+type StringItem string
 
-func (i Gap) Id() string {
+func (i StringItem) Id() string {
 	return string(i)
 }
 
@@ -36,7 +43,7 @@ func items_to_strings(a [][]Item) []string {
 func string_to_item(a string) []Item {
 	ai := make([]Item, 0)
 	for _, v := range a {
-		ai = append(ai, Gap(v))
+		ai = append(ai, StringItem(v))
 	}
 	return ai
 }
