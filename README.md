@@ -8,7 +8,7 @@ go get -u github.com/MichaelLeachim/wunsch
 
 ## Reasons behind the implementation
 
-There are three reasons behind this implentation:
+There are three reasons behind this implementation:
 
 * To allow generic (not only strings) alignment between collections
 * To allow alignment of more than two sequences
@@ -40,7 +40,7 @@ some code snippets that might prove useful
 
 ### Item interface
 
-It must implement the Id method. Item Id is an equivalent of a `rune` in a `string` item. 
+It must implement the Id method. Item `Id()` is an equivalent of a `rune` in a `string` item. 
 
 ```go
 type Item interface {
