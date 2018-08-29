@@ -56,18 +56,6 @@ type Item struct {
 }
 ```
 
-Example of String implementation
-
-```go
-
-type StringItem string
-
-func (i StringItem) Id() string {
-	return string(i)
-}
-
-```
-
 ### Alignment process
 
 ```go 
