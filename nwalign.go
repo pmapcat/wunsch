@@ -18,7 +18,7 @@ func CanAlign(data [][]Item) bool {
 	for _, v := range data {
 		right := v[0]
 		left := v[1]
-		if right.Id() == left.Id() {
+		if right.Id == left.Id {
 			// start item
 			if hasLetterA == true && hasLetterB == true {
 				return false
@@ -27,10 +27,10 @@ func CanAlign(data [][]Item) bool {
 			hasLetterB = false
 			continue
 		}
-		if right.Id() != "-" {
+		if !right.IsGap() {
 			hasLetterA = true
 		}
-		if left.Id() != "-" {
+		if !left.IsGap() {
 			hasLetterB = true
 		}
 	}
@@ -43,11 +43,11 @@ func SimpleAlignment(alignment [][]Item) []Item {
 	for _, v := range alignment {
 		right := v[0]
 		left := v[1]
-		if right.Id() == "-" {
+		if right.IsGap() {
 			result = append(result, left)
 			continue
 		}
-		if left.Id() == "-" {
+		if left.IsGap() {
 			result = append(result, right)
 			continue
 		}
@@ -57,7 +57,10 @@ func SimpleAlignment(alignment [][]Item) []Item {
 }
 
 func MakeFingerPrint(data [][]Item) []Item {
-	sort.Sort(ItemSlice(data))
+	sort.Slice(data, func(i, j int) bool {
+		return len(data[i]) < len(data[j])
+	})
+
 	fingerPrint := data[0]
 	for _, v := range data {
 		data, _ := NeedlemanWunsch(fingerPrint, v, 1, 0, 0)
@@ -92,14 +95,18 @@ func AlignManyString(data []string) []string {
 	result, _ := AlignMany(datai)
 	must_return := make([]string, 0)
 	for _, v := range result {
-		must_return = append(must_return, stringify_items(v))
+		must_return = append(must_return, item_to_string(v))
 	}
 	return must_return
 }
+
 func CanAlignString(a, b string) bool {
-	result := make([][]Item, 0)
-	for k, _ := range a {
-		result = append(result, []Item{StringItem(a[k]), StringItem(b[k])})
+	result := [][]Item{}
+	for index, _ := range min_of(a, b) {
+		result = append(result, []Item{
+			NewItemFromRune(index, a[index]),
+			NewItemFromRune(index, b[index]),
+		})
 	}
 	return CanAlign(result)
 }

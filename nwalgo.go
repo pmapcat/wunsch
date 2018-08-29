@@ -14,10 +14,6 @@
 
 package wunsch
 
-import (
-	"bytes"
-)
-
 const (
 	UP   = 1
 	LEFT = 2
@@ -50,7 +46,7 @@ func NeedlemanWunsch(a, b []Item, match, mismatch, gap int) ([][]Item, int) {
 	for i := 1; i < alen; i++ {
 		for j := 1; j < blen; j++ {
 			match_mismatch := mismatch
-			if a[i-1].Id() == b[j-1].Id() {
+			if a[i-1].Id == b[j-1].Id {
 				match_mismatch = match
 			}
 
@@ -87,27 +83,32 @@ func NeedlemanWunsch(a, b []Item, match, mismatch, gap int) ([][]Item, int) {
 			i--
 			j--
 		} else if p == UP {
-			result = join_items(result, a[i-1], StringItem("-"))
+			result = join_items(result, a[i-1], NewGapItem())
 			i--
 		} else if p == LEFT {
-			result = join_items(result, StringItem("-"), b[j-1])
+			result = join_items(result, NewGapItem(), b[j-1])
 			j--
 		}
 	}
 	return result, score
 }
 
+func UnzipListOfItems(items [][]Item) ([]Item, []Item) {
+	a := []Item{}
+	b := []Item{}
+	for _, item := range items {
+		a = append(a, item[0])
+		b = append(b, item[1])
+	}
+	return a, b
+}
+
 func NeedlemanWunschString(match, mismatch, gap int, a, b string) (string, string, int) {
-	ai := make([]Item, 0)
-	bi := make([]Item, 0)
+	ai := []Item{}
+	bi := []Item{}
 	ai = string_to_item(a)
 	bi = string_to_item(b)
 	result, score := NeedlemanWunsch(ai, bi, match, mismatch, gap)
-	var ab bytes.Buffer
-	var bb bytes.Buffer
-	for _, v := range result {
-		ab.WriteString(v[0].Id())
-		bb.WriteString(v[1].Id())
-	}
-	return ab.String(), bb.String(), score
+	na, nb := UnzipListOfItems(result)
+	return item_to_string(na), item_to_string(nb), score
 }

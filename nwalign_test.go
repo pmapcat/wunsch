@@ -6,6 +6,7 @@ import (
 )
 
 func TestCanAlign(t *testing.T) {
+	assert.Equal(t, int('-'), 45)
 	assert.Equal(t, CanAlignString("ABCDEF", "ABCDEF"), true)
 	assert.Equal(t, CanAlignString("ABCDEF", "ABCDEF"), true)
 	assert.Equal(t, true, CanAlignString("ab--e", "-bcde"))
@@ -15,6 +16,8 @@ func TestCanAlign(t *testing.T) {
 	assert.Equal(t, true, CanAlignString("abxe", "ab-e"))
 	assert.Equal(t, true, CanAlignString("-a--a--a-------", "0a12a34a12abcde"))
 	assert.Equal(t, false, CanAlignString("-ABCDEF", "Q-BCDEF"))
+	assert.Equal(t, false, CanAlignString("-ABCDEF-----", "Q-BCDEF"))
+
 }
 
 func TestMultipleAlignment(t *testing.T) {
@@ -39,5 +42,5 @@ func TestMultipleAlignment(t *testing.T) {
 
 func TestMakeFingerPrint(t *testing.T) {
 	data := []string{"Hello", "Hallo", "Hillo", "Hwello", "lloha", "habar"}
-	assert.Equal(t, stringify_items(MakeFingerPrint(strings_to_items(data))), "Hwiaellohabar")
+	assert.Equal(t, item_to_string(MakeFingerPrint(strings_to_items(data))), "Hwiaellohabar")
 }

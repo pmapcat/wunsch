@@ -11,14 +11,25 @@ import (
 	"bytes"
 )
 
-type Item interface {
-	Id() string
+type Item struct {
+	Id    int
+	Index int
 }
 
-type StringItem string
-
-func (i StringItem) Id() string {
-	return string(i)
+func NewItem(index, id int) Item {
+	return Item{Id: id, Index: index}
+}
+func (i *Item) IsGap() bool {
+	return i.Index == -1
+}
+func NewItemFromRune(index int, point byte) Item {
+	if int(point) == 45 {
+		return NewGapItem()
+	}
+	return NewItem(index, int(point))
+}
+func NewGapItem() Item {
+	return Item{Id: -1, Index: -1}
 }
 
 func join_items(result [][]Item, a, b Item) [][]Item {
@@ -35,37 +46,37 @@ func strings_to_items(a []string) [][]Item {
 func items_to_strings(a [][]Item) []string {
 	result := []string{}
 	for _, v := range a {
-		result = append(result, stringify_items(v))
+		result = append(result, item_to_string(v))
 	}
 	return result
 }
 
 func string_to_item(a string) []Item {
-	ai := make([]Item, 0)
-	for _, v := range a {
-		ai = append(ai, StringItem(v))
+	ai := []Item{}
+	for index, id := range a {
+		ai = append(ai, NewItem(index, int(id)))
 	}
 	return ai
 }
-
-func stringify_items(data []Item) string {
+func IsStringGap(input rune) bool {
+	return int(input) == 45
+}
+func item_to_string(data []Item) string {
 	var b bytes.Buffer
 	for _, v := range data {
-		b.WriteString(v.Id())
+		if v.IsGap() {
+			b.WriteString("-")
+		} else {
+			b.WriteString(string(v.Id))
+		}
 	}
 	return b.String()
 }
 
-type ItemSlice [][]Item
+func min_of(a, b string) string {
+	if len(a) < len(b) {
+		return a
+	}
+	return b
 
-func (slice ItemSlice) Len() int {
-	return len(slice)
-}
-
-func (slice ItemSlice) Less(i, j int) bool {
-	return len(slice[i]) < len(slice[j])
-}
-
-func (slice ItemSlice) Swap(i, j int) {
-	slice[i], slice[j] = slice[j], slice[i]
 }
